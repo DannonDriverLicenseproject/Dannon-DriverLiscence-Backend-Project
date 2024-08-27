@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Verification{% endblock title %}
+
+{% block main_content %}
+<p class="card-text">
+    To complete your sign-up, we need to verify your email address. Please click the link below:
+</p>
+<p class="card-text">
+    <a href="{{ verification_link }}" class="btn btn-primary">Verify Your Account</a>
+</p>
+<p class="card-text">
+    If the button above doesn't work, copy and paste the following link into your browser:
+    <br>
+    <a href="{{ verification_link }}">{{ verification_link }}</a>
+</p>
+{% endblock main_content %}
+
+{% block signature %}
+License Agency
+{% endblock signature %}
