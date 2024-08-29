@@ -1,0 +1,14 @@
+{% extends "basee.html" %}
+
+{% block title %}Application Slip{% endblock %}
+
+{% block content %}
+<div class="application-details">
+    <p><strong>Application Type:</strong> {{ application_type }}</p>
+    <p><strong>Applicant Name:</strong> {{ application.first_name }} {{ application.last_name }}</p>
+    <p><strong>Date of Birth:</strong> {{ application.date_of_birth }}</p>
+    <p><strong>Reference Number:</strong> {{ application.reference }}</p>
+    <p><strong>Amount Paid:</strong> {{ application.payment.amount }}</p>
+    <p><strong>Transaction ID:</strong> {{ application.payment.transaction_id }}</p>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.core.cache import cache
-
+from django.conf import settings
 class UserManager(BaseUserManager):
     """Manager to handle user creation and superuser creation."""
     
@@ -82,4 +82,40 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """Override delete method to clear cache when user is deleted."""
         cache.delete(f"user_email_{self.email}")
         cache.delete(f"user_id_{self.id}")
+        super().delete(*args, **kwargs)
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # phone_number = models.CharField(max_length=15, blank=True, null=True)
+    # address = models.TextField(blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    gender = models.CharField(max_length=10, blank=True, null=True)
+    mother_maiden_name = models.CharField(max_length=100, blank=True, null=True)
+    NIN = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    passport_photo = models.ImageField(upload_to='passport_photos/', blank=True, null=True)
+
+    def __str__(self):
+        return self.user.email
+    
+    @classmethod
+    def get_profile_by_id(cls, profile_id):
+        """Retrieve profile from cache or database by profile ID."""
+        cache_key = f"profile_id_{profile_id}"
+        profile = cache.get(cache_key)
+        if not profile:
+            profile = cls.objects.filter(id=profile_id).first()
+            if profile:
+                cache.set(cache_key, profile, timeout=300)
+        return profile
+
+    def save(self, *args, **kwargs):
+        """Override save method to clear cache when profile is updated."""
+        super().save(*args, **kwargs)
+        cache.delete(f"profile_user_id_{self.user_id}")
+        cache.delete(f"profile_id_{self.id}")
+
+    def delete(self, *args, **kwargs):
+        """Override delete method to clear cache when profile is deleted."""
+        cache.delete(f"profile_user_id_{self.user_id}")
+        cache.delete(f"profile_id_{self.id}")
         super().delete(*args, **kwargs)

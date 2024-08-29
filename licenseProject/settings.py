@@ -48,6 +48,7 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "corsheaders",
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'django_password_validators',
     'django_password_validators.password_history',
     #   'django.contrib.sites',
@@ -57,6 +58,9 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'userAuth',
+    'licenseApplication',
+    'licenseManagmentApp',
+    'paymentApp'
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
