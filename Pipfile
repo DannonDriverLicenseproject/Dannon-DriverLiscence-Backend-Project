@@ -4,6 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+cryptography = "==43.0.0"
+django = "==5.0.6"
+django-allauth = "==64.0.0"
+django-cors-headers = "==4.4.0"
+django-environ = "==0.11.2"
+django-redis = "==5.4.0"
+djangorestframework = "==3.15.2"
+djangorestframework-simplejwt = "==5.3.1"
+drf-yasg = "==1.21.7"
+itsdangerous = "==2.2.0"
+pillow = "==10.4.0"
+redis = "==5.0.8"
 
 [dev-packages]
 
