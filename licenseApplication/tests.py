@@ -180,6 +180,7 @@ class ApplicationSlipViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTemplateUsed(response, 'application_slip.html')
+        
 
     def test_application_slip_print_view(self):
         application = NewLicenseApplication.objects.create(
